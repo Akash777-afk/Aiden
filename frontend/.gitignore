@@ -7,3 +7,4 @@ screenshots/
 
 .vercel
 .env*
+!.env.example
