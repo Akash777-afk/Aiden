@@ -1,0 +1,6496 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "AIDEN API",
+  "description": "Backend for AIDEN \u2014 *A better connection with yourself.* See docs/API_CONTRACT.md.",
+  "version": "0.2.0"
+ },
+ "paths": {
+  "/api/v1/health": {
+   "get": {
+    "tags": [
+     "system"
+    ],
+    "summary": "Health",
+    "operationId": "health_api_v1_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/register": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Register",
+    "operationId": "register_api_v1_auth_register_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RegisterIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AuthOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/login": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Login",
+    "operationId": "login_api_v1_auth_login_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LoginIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AuthOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/refresh": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Refresh",
+    "operationId": "refresh_api_v1_auth_refresh_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefreshIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenPair"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/logout": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Logout",
+    "operationId": "logout_api_v1_auth_logout_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefreshIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/auth/me": {
+   "get": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Me",
+    "operationId": "me_api_v1_auth_me_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/users/me": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Get Me",
+    "operationId": "get_me_api_v1_users_me_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "delete": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Delete Me",
+    "operationId": "delete_me_api_v1_users_me_delete",
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "patch": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Patch Me",
+    "operationId": "patch_me_api_v1_users_me_patch",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ProfilePatch"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/users/me/preferences": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Get Prefs",
+    "operationId": "get_prefs_api_v1_users_me_preferences_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Get Prefs Api V1 Users Me Preferences Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "patch": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Patch Prefs",
+    "operationId": "patch_prefs_api_v1_users_me_preferences_patch",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "additionalProperties": true,
+        "type": "object",
+        "title": "Patch"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Patch Prefs Api V1 Users Me Preferences Patch"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/users/me/consents": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Consents",
+    "operationId": "consents_api_v1_users_me_consents_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ConsentOut"
+         },
+         "type": "array",
+         "title": "Response Consents Api V1 Users Me Consents Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/users/me/consents/{ctype}": {
+   "put": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Put Consent",
+    "operationId": "put_consent_api_v1_users_me_consents__ctype__put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "ctype",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ctype"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ConsentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ConsentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/users/me/export": {
+   "get": {
+    "tags": [
+     "users"
+    ],
+    "summary": "Export",
+    "operationId": "export_api_v1_users_me_export_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Export Api V1 Users Me Export Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/checkins": {
+   "get": {
+    "tags": [
+     "pulse"
+    ],
+    "summary": "List Checkins",
+    "operationId": "list_checkins_api_v1_checkins_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "from",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "From"
+      }
+     },
+     {
+      "name": "to",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "To"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_CheckinOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "pulse"
+    ],
+    "summary": "Create Checkin",
+    "operationId": "create_checkin_api_v1_checkins_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CheckinIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckinOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/checkins/summary": {
+   "get": {
+    "tags": [
+     "pulse"
+    ],
+    "summary": "Checkin Summary",
+    "operationId": "checkin_summary_api_v1_checkins_summary_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 365,
+       "minimum": 1,
+       "default": 7,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckinSummary"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/checkins/{cid}": {
+   "delete": {
+    "tags": [
+     "pulse"
+    ],
+    "summary": "Delete Checkin",
+    "operationId": "delete_checkin_api_v1_checkins__cid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "cid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Cid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/journal": {
+   "get": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "List Journal",
+    "operationId": "list_journal_api_v1_journal_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 100
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     },
+     {
+      "name": "from",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "From"
+      }
+     },
+     {
+      "name": "to",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "To"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_JournalOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "Create Entry",
+    "operationId": "create_entry_api_v1_journal_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/JournalIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/JournalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/journal/tags": {
+   "get": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "Journal Tags",
+    "operationId": "journal_tags_api_v1_journal_tags_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array",
+         "title": "Response Journal Tags Api V1 Journal Tags Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/journal/{eid}": {
+   "get": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "Get Entry",
+    "operationId": "get_entry_api_v1_journal__eid__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "eid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Eid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/JournalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "Patch Entry",
+    "operationId": "patch_entry_api_v1_journal__eid__patch",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "eid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Eid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/JournalPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/JournalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "journal"
+    ],
+    "summary": "Delete Entry",
+    "operationId": "delete_entry_api_v1_journal__eid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "eid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Eid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/habits": {
+   "get": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "List Habits",
+    "operationId": "list_habits_api_v1_habits_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "date",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Date"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/HabitOut"
+         },
+         "title": "Response List Habits Api V1 Habits Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Create Habit",
+    "operationId": "create_habit_api_v1_habits_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/HabitIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HabitOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/habits/stats": {
+   "get": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Habit Stats",
+    "operationId": "habit_stats_api_v1_habits_stats_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 90,
+       "minimum": 1,
+       "default": 7,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DayStat"
+         },
+         "title": "Response Habit Stats Api V1 Habits Stats Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/habits/{hid}": {
+   "patch": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Patch Habit",
+    "operationId": "patch_habit_api_v1_habits__hid__patch",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "hid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Hid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/HabitPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HabitOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Delete Habit",
+    "operationId": "delete_habit_api_v1_habits__hid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "hid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Hid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/habits/{hid}/logs/{day}": {
+   "put": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Put Log",
+    "operationId": "put_log_api_v1_habits__hid__logs__day__put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "hid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Hid"
+      }
+     },
+     {
+      "name": "day",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Day"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/HabitLogIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HabitOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Delete Log",
+    "operationId": "delete_log_api_v1_habits__hid__logs__day__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "hid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Hid"
+      }
+     },
+     {
+      "name": "day",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Day"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HabitOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/routine": {
+   "get": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Get Routine",
+    "operationId": "get_routine_api_v1_routine_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/RoutineStepOut"
+         },
+         "type": "array",
+         "title": "Response Get Routine Api V1 Routine Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "put": {
+    "tags": [
+     "rhythm"
+    ],
+    "summary": "Put Routine",
+    "operationId": "put_routine_api_v1_routine_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "items": {
+         "$ref": "#/components/schemas/RoutineStepIn"
+        },
+        "type": "array",
+        "title": "Steps"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/RoutineStepOut"
+         },
+         "type": "array",
+         "title": "Response Put Routine Api V1 Routine Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/sleep/logs": {
+   "get": {
+    "tags": [
+     "sleep"
+    ],
+    "summary": "Sleep Logs",
+    "operationId": "sleep_logs_api_v1_sleep_logs_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 365,
+       "minimum": 1,
+       "default": 30,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/SleepOut"
+         },
+         "title": "Response Sleep Logs Api V1 Sleep Logs Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/sleep/logs/{night}": {
+   "put": {
+    "tags": [
+     "sleep"
+    ],
+    "summary": "Put Sleep",
+    "operationId": "put_sleep_api_v1_sleep_logs__night__put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "night",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Night"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SleepIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SleepOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "sleep"
+    ],
+    "summary": "Delete Sleep",
+    "operationId": "delete_sleep_api_v1_sleep_logs__night__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "night",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Night"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/sleep/favorites": {
+   "get": {
+    "tags": [
+     "sleep"
+    ],
+    "summary": "Get Favs",
+    "operationId": "get_favs_api_v1_sleep_favorites_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array",
+         "title": "Response Get Favs Api V1 Sleep Favorites Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "put": {
+    "tags": [
+     "sleep"
+    ],
+    "summary": "Put Favs",
+    "operationId": "put_favs_api_v1_sleep_favorites_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "items": {
+         "type": "string"
+        },
+        "type": "array",
+        "title": "Ids"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array",
+         "title": "Response Put Favs Api V1 Sleep Favorites Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/decisions": {
+   "get": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "List Decisions",
+    "operationId": "list_decisions_api_v1_decisions_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/DecisionSummary"
+         },
+         "type": "array",
+         "title": "Response List Decisions Api V1 Decisions Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "post": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "Create Decision",
+    "operationId": "create_decision_api_v1_decisions_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DecisionIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DecisionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/decisions/{sid}": {
+   "get": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "Get Decision",
+    "operationId": "get_decision_api_v1_decisions__sid__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "sid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Sid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DecisionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "Put Decision",
+    "operationId": "put_decision_api_v1_decisions__sid__put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "sid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Sid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DecisionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DecisionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "Delete Decision",
+    "operationId": "delete_decision_api_v1_decisions__sid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "sid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Sid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/decisions/{sid}/reflect": {
+   "post": {
+    "tags": [
+     "clarity"
+    ],
+    "summary": "Reflect",
+    "operationId": "reflect_api_v1_decisions__sid__reflect_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "sid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Sid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReflectionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/ai/conversations": {
+   "get": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Conversations",
+    "operationId": "conversations_api_v1_ai_conversations_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ConversationSummary"
+         },
+         "type": "array",
+         "title": "Response Conversations Api V1 Ai Conversations Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "post": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "New Conversation",
+    "operationId": "new_conversation_api_v1_ai_conversations_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ConversationIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ConversationOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/ai/conversations/{cid}": {
+   "get": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Get Conversation",
+    "operationId": "get_conversation_api_v1_ai_conversations__cid__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "cid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Cid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ConversationOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Delete Conversation",
+    "operationId": "delete_conversation_api_v1_ai_conversations__cid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "cid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Cid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/ai/conversations/{cid}/messages": {
+   "post": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Send",
+    "operationId": "send_api_v1_ai_conversations__cid__messages_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "cid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Cid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SendIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SendOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Clear",
+    "operationId": "clear_api_v1_ai_conversations__cid__messages_delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "cid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Cid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/ai/ephemeral": {
+   "post": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Ephemeral",
+    "operationId": "ephemeral_api_v1_ai_ephemeral_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EphemeralIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EphemeralOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/ai/memories": {
+   "get": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Memories",
+    "operationId": "memories_api_v1_ai_memories_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/MemoryOut"
+         },
+         "type": "array",
+         "title": "Response Memories Api V1 Ai Memories Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "post": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Add Memory",
+    "operationId": "add_memory_api_v1_ai_memories_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MemoryIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MemoryOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "delete": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Clear Memories",
+    "operationId": "clear_memories_api_v1_ai_memories_delete",
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/ai/memories/{mid}": {
+   "patch": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Patch Memory",
+    "operationId": "patch_memory_api_v1_ai_memories__mid__patch",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "mid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Mid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MemoryPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MemoryOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "ai"
+    ],
+    "summary": "Delete Memory",
+    "operationId": "delete_memory_api_v1_ai_memories__mid__delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "mid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Mid"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/professionals": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Professionals",
+    "operationId": "professionals_api_v1_professionals_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 80
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     },
+     {
+      "name": "language",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Language"
+      }
+     },
+     {
+      "name": "mode",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(text|voice|video|scheduled)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Mode"
+      }
+     },
+     {
+      "name": "maxFee",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer",
+         "minimum": 0
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Maxfee"
+      }
+     },
+     {
+      "name": "available",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Available"
+      }
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(rating|fee|experience)$",
+       "default": "rating",
+       "title": "Sort"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ProfessionalOut"
+         },
+         "title": "Response Professionals Api V1 Professionals Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/professionals/{pid}": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Professional",
+    "operationId": "professional_api_v1_professionals__pid__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "pid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Pid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfessionalDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/professionals/{pid}/reviews": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Pro Reviews",
+    "operationId": "pro_reviews_api_v1_professionals__pid__reviews_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "pid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Pid"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 100,
+       "minimum": 1,
+       "default": 20,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_ReviewOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/professionals/{pid}/slots": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Pro Slots",
+    "operationId": "pro_slots_api_v1_professionals__pid__slots_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "pid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Pid"
+      }
+     },
+     {
+      "name": "date",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Date"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/Slot"
+         },
+         "title": "Response Pro Slots Api V1 Professionals  Pid  Slots Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/appointments": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Appointments",
+    "operationId": "appointments_api_v1_appointments_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/AppointmentOut"
+         },
+         "type": "array",
+         "title": "Response Appointments Api V1 Appointments Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "post": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Book",
+    "operationId": "book_api_v1_appointments_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AppointmentIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppointmentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/appointments/{aid}": {
+   "get": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Appointment",
+    "operationId": "appointment_api_v1_appointments__aid__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "aid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Aid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppointmentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/appointments/{aid}/cancel": {
+   "post": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Cancel",
+    "operationId": "cancel_api_v1_appointments__aid__cancel_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "aid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Aid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppointmentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/appointments/{aid}/review": {
+   "post": {
+    "tags": [
+     "connect"
+    ],
+    "summary": "Review",
+    "operationId": "review_api_v1_appointments__aid__review_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "aid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Aid"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReviewIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReviewOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/insights": {
+   "get": {
+    "tags": [
+     "insights"
+    ],
+    "summary": "Insights",
+    "operationId": "insights_api_v1_insights_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 30,
+       "minimum": 7,
+       "default": 7,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InsightsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/learn/categories": {
+   "get": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Learn Categories",
+    "operationId": "learn_categories_api_v1_learn_categories_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/CategoryOut"
+         },
+         "type": "array",
+         "title": "Response Learn Categories Api V1 Learn Categories Get"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/learn/articles": {
+   "get": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Learn Articles",
+    "operationId": "learn_articles_api_v1_learn_articles_get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "category",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Category"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 80
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ArticleOut"
+         },
+         "title": "Response Learn Articles Api V1 Learn Articles Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/learn/articles/{slug}": {
+   "get": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Learn Article",
+    "operationId": "learn_article_api_v1_learn_articles__slug__get",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArticleDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/learn/articles/{slug}/complete": {
+   "put": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Complete",
+    "operationId": "complete_api_v1_learn_articles__slug__complete_put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArticleDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Uncomplete",
+    "operationId": "uncomplete_api_v1_learn_articles__slug__complete_delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArticleDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/learn/articles/{slug}/bookmark": {
+   "put": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Bookmark",
+    "operationId": "bookmark_api_v1_learn_articles__slug__bookmark_put",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArticleDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "learn"
+    ],
+    "summary": "Unbookmark",
+    "operationId": "unbookmark_api_v1_learn_articles__slug__bookmark_delete",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArticleDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/notifications": {
+   "get": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Notifications",
+    "operationId": "notifications_api_v1_notifications_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NotificationList"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   },
+   "delete": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Clear Notifications",
+    "operationId": "clear_notifications_api_v1_notifications_delete",
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/notifications/read-all": {
+   "post": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Read All",
+    "operationId": "read_all_api_v1_notifications_read_all_post",
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     }
+    },
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/notifications/{nid}/read": {
+   "post": {
+    "tags": [
+     "notifications"
+    ],
+    "summary": "Read One",
+    "operationId": "read_one_api_v1_notifications__nid__read_post",
+    "security": [
+     {
+      "HTTPBearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "nid",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Nid"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NotificationOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "ActionIn": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 2,
+      "title": "Label"
+     },
+     "rating": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Rating",
+      "default": 3
+     },
+     "benefits": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Benefits",
+      "default": ""
+     },
+     "risks": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Risks",
+      "default": ""
+     },
+     "short": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Short",
+      "default": ""
+     },
+     "long": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Long",
+      "default": ""
+     },
+     "uncertainties": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Uncertainties",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label"
+    ],
+    "title": "ActionIn"
+   },
+   "AppointmentIn": {
+    "properties": {
+     "professionalId": {
+      "type": "string",
+      "title": "Professionalid"
+     },
+     "type": {
+      "type": "string",
+      "pattern": "^(text|voice|video|scheduled)$",
+      "title": "Type"
+     },
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "professionalId",
+     "type",
+     "date",
+     "time"
+    ],
+    "title": "AppointmentIn"
+   },
+   "AppointmentOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "ref": {
+      "type": "string",
+      "title": "Ref"
+     },
+     "professionalId": {
+      "type": "string",
+      "title": "Professionalid"
+     },
+     "proName": {
+      "type": "string",
+      "title": "Proname"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "type": {
+      "type": "string",
+      "title": "Type"
+     },
+     "startsAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Startsat"
+     },
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "durationMin": {
+      "type": "integer",
+      "title": "Durationmin"
+     },
+     "price": {
+      "type": "integer",
+      "title": "Price"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "ref",
+     "professionalId",
+     "proName",
+     "avatar",
+     "type",
+     "startsAt",
+     "date",
+     "time",
+     "durationMin",
+     "price",
+     "status",
+     "note",
+     "createdAt"
+    ],
+    "title": "AppointmentOut"
+   },
+   "ArticleDetail": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "category": {
+      "type": "string",
+      "title": "Category"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "minutes": {
+      "type": "integer",
+      "title": "Minutes"
+     },
+     "completed": {
+      "type": "boolean",
+      "title": "Completed",
+      "default": false
+     },
+     "bookmarked": {
+      "type": "boolean",
+      "title": "Bookmarked",
+      "default": false
+     },
+     "sections": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Sections"
+     },
+     "takeaway": {
+      "type": "string",
+      "title": "Takeaway"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "category",
+     "title",
+     "summary",
+     "minutes",
+     "sections",
+     "takeaway"
+    ],
+    "title": "ArticleDetail"
+   },
+   "ArticleOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "category": {
+      "type": "string",
+      "title": "Category"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "minutes": {
+      "type": "integer",
+      "title": "Minutes"
+     },
+     "completed": {
+      "type": "boolean",
+      "title": "Completed",
+      "default": false
+     },
+     "bookmarked": {
+      "type": "boolean",
+      "title": "Bookmarked",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "category",
+     "title",
+     "summary",
+     "minutes"
+    ],
+    "title": "ArticleOut"
+   },
+   "AuthOut": {
+    "properties": {
+     "accessToken": {
+      "type": "string",
+      "title": "Accesstoken"
+     },
+     "refreshToken": {
+      "type": "string",
+      "title": "Refreshtoken"
+     },
+     "tokenType": {
+      "type": "string",
+      "title": "Tokentype",
+      "default": "bearer"
+     },
+     "expiresIn": {
+      "type": "integer",
+      "title": "Expiresin"
+     },
+     "user": {
+      "$ref": "#/components/schemas/UserOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "accessToken",
+     "refreshToken",
+     "expiresIn",
+     "user"
+    ],
+    "title": "AuthOut"
+   },
+   "CategoryOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "icon": {
+      "type": "string",
+      "title": "Icon"
+     },
+     "color": {
+      "type": "string",
+      "title": "Color"
+     },
+     "tint": {
+      "type": "string",
+      "title": "Tint"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label",
+     "icon",
+     "color",
+     "tint"
+    ],
+    "title": "CategoryOut"
+   },
+   "ChatAction": {
+    "properties": {
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "to": {
+      "type": "string",
+      "title": "To"
+     }
+    },
+    "type": "object",
+    "required": [
+     "label",
+     "to"
+    ],
+    "title": "ChatAction"
+   },
+   "CheckinIn": {
+    "properties": {
+     "emotion": {
+      "type": "string",
+      "pattern": "^(calm|happy|okay|stressed|anxious|sad|frustrated)$",
+      "title": "Emotion"
+     },
+     "intensity": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Intensity",
+      "default": 3
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "triggers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Triggers"
+     }
+    },
+    "type": "object",
+    "required": [
+     "emotion"
+    ],
+    "title": "CheckinIn"
+   },
+   "CheckinOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "emotion": {
+      "type": "string",
+      "title": "Emotion"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "triggers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Triggers"
+     },
+     "at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "emotion",
+     "intensity",
+     "note",
+     "triggers",
+     "at"
+    ],
+    "title": "CheckinOut"
+   },
+   "CheckinSummary": {
+    "properties": {
+     "days": {
+      "type": "integer",
+      "title": "Days"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "streak": {
+      "type": "integer",
+      "title": "Streak"
+     },
+     "distribution": {
+      "items": {
+       "$ref": "#/components/schemas/EmotionCount"
+      },
+      "type": "array",
+      "title": "Distribution"
+     },
+     "topEmotion": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topemotion"
+     }
+    },
+    "type": "object",
+    "required": [
+     "days",
+     "count",
+     "streak",
+     "distribution",
+     "topEmotion"
+    ],
+    "title": "CheckinSummary"
+   },
+   "ConsentIn": {
+    "properties": {
+     "granted": {
+      "type": "boolean",
+      "title": "Granted"
+     }
+    },
+    "type": "object",
+    "required": [
+     "granted"
+    ],
+    "title": "ConsentIn"
+   },
+   "ConsentOut": {
+    "properties": {
+     "type": {
+      "type": "string",
+      "title": "Type"
+     },
+     "granted": {
+      "type": "boolean",
+      "title": "Granted"
+     },
+     "version": {
+      "type": "string",
+      "title": "Version"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updatedat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "type",
+     "granted",
+     "version",
+     "updatedAt"
+    ],
+    "title": "ConsentOut"
+   },
+   "ConversationIn": {
+    "properties": {
+     "mode": {
+      "type": "string",
+      "pattern": "^(personal|guided)$",
+      "title": "Mode",
+      "default": "personal"
+     }
+    },
+    "type": "object",
+    "title": "ConversationIn"
+   },
+   "ConversationOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "mode": {
+      "type": "string",
+      "title": "Mode"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updatedat"
+     },
+     "messages": {
+      "items": {
+       "$ref": "#/components/schemas/MessageOut"
+      },
+      "type": "array",
+      "title": "Messages"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "mode",
+     "title",
+     "createdAt",
+     "updatedAt",
+     "messages"
+    ],
+    "title": "ConversationOut"
+   },
+   "ConversationSummary": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "mode": {
+      "type": "string",
+      "title": "Mode"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updatedat"
+     },
+     "messageCount": {
+      "type": "integer",
+      "title": "Messagecount",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "mode",
+     "title",
+     "updatedAt"
+    ],
+    "title": "ConversationSummary"
+   },
+   "CredentialOut": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "number": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Number"
+     },
+     "verified": {
+      "type": "boolean",
+      "title": "Verified"
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind",
+     "title",
+     "number",
+     "verified"
+    ],
+    "title": "CredentialOut"
+   },
+   "DayStat": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "done": {
+      "type": "integer",
+      "title": "Done"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "pct": {
+      "type": "integer",
+      "title": "Pct"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "done",
+     "total",
+     "pct"
+    ],
+    "title": "DayStat"
+   },
+   "DecisionIn": {
+    "properties": {
+     "title": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 3,
+      "title": "Title"
+     },
+     "thoughts": {
+      "$ref": "#/components/schemas/Thoughts"
+     },
+     "actions": {
+      "items": {
+       "$ref": "#/components/schemas/ActionIn"
+      },
+      "type": "array",
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Actions"
+     },
+     "chosenActionId": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chosenactionid"
+     },
+     "reflection": {
+      "type": "string",
+      "maxLength": 600,
+      "title": "Reflection",
+      "default": ""
+     },
+     "map": {
+      "$ref": "#/components/schemas/DecisionMap"
+     }
+    },
+    "type": "object",
+    "required": [
+     "title",
+     "thoughts",
+     "actions"
+    ],
+    "title": "DecisionIn"
+   },
+   "DecisionMap": {
+    "properties": {
+     "positions": {
+      "additionalProperties": {
+       "$ref": "#/components/schemas/Point"
+      },
+      "type": "object",
+      "title": "Positions"
+     },
+     "notes": {
+      "items": {
+       "$ref": "#/components/schemas/MapNote"
+      },
+      "type": "array",
+      "maxItems": 40,
+      "title": "Notes"
+     },
+     "edges": {
+      "items": {
+       "$ref": "#/components/schemas/MapEdge"
+      },
+      "type": "array",
+      "maxItems": 80,
+      "title": "Edges"
+     }
+    },
+    "type": "object",
+    "title": "DecisionMap"
+   },
+   "DecisionOut": {
+    "properties": {
+     "title": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 3,
+      "title": "Title"
+     },
+     "thoughts": {
+      "$ref": "#/components/schemas/Thoughts"
+     },
+     "actions": {
+      "items": {
+       "$ref": "#/components/schemas/ActionIn"
+      },
+      "type": "array",
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Actions"
+     },
+     "chosenActionId": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chosenactionid"
+     },
+     "reflection": {
+      "type": "string",
+      "maxLength": 600,
+      "title": "Reflection",
+      "default": ""
+     },
+     "map": {
+      "$ref": "#/components/schemas/DecisionMap"
+     },
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updatedat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "title",
+     "thoughts",
+     "actions",
+     "id",
+     "createdAt",
+     "updatedAt"
+    ],
+    "title": "DecisionOut"
+   },
+   "DecisionSummary": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "actionCount": {
+      "type": "integer",
+      "title": "Actioncount"
+     },
+     "chosenActionId": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chosenactionid"
+     },
+     "chosenLabel": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chosenlabel"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updatedat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "actionCount",
+     "chosenActionId",
+     "chosenLabel",
+     "createdAt",
+     "updatedAt"
+    ],
+    "title": "DecisionSummary"
+   },
+   "EmotionCount": {
+    "properties": {
+     "emotion": {
+      "type": "string",
+      "title": "Emotion"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "emotion",
+     "count"
+    ],
+    "title": "EmotionCount"
+   },
+   "EphemeralIn": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Text"
+     },
+     "history": {
+      "items": {
+       "$ref": "#/components/schemas/HistoryItem"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "History"
+     }
+    },
+    "type": "object",
+    "required": [
+     "text"
+    ],
+    "title": "EphemeralIn"
+   },
+   "EphemeralOut": {
+    "properties": {
+     "assistantMessage": {
+      "$ref": "#/components/schemas/MessageOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "assistantMessage"
+    ],
+    "title": "EphemeralOut"
+   },
+   "Growth": {
+    "properties": {
+     "chat": {
+      "type": "boolean",
+      "title": "Chat"
+     },
+     "habit": {
+      "type": "boolean",
+      "title": "Habit"
+     },
+     "sleep": {
+      "type": "boolean",
+      "title": "Sleep"
+     },
+     "reflect": {
+      "type": "boolean",
+      "title": "Reflect"
+     },
+     "grow": {
+      "type": "boolean",
+      "title": "Grow"
+     }
+    },
+    "type": "object",
+    "required": [
+     "chat",
+     "habit",
+     "sleep",
+     "reflect",
+     "grow"
+    ],
+    "title": "Growth"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "HabitIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 3,
+      "title": "Name"
+     },
+     "category": {
+      "type": "string",
+      "pattern": "^(wake|hydration|activity|sleep|mindfulness|journaling|reading|growth)$",
+      "title": "Category"
+     },
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "frequency": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "maxItems": 14,
+      "minItems": 1,
+      "title": "Frequency"
+     },
+     "reminder": {
+      "type": "boolean",
+      "title": "Reminder",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "category",
+     "time",
+     "frequency"
+    ],
+    "title": "HabitIn"
+   },
+   "HabitLogIn": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "pattern": "^(done|skipped)$",
+      "title": "Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "status"
+    ],
+    "title": "HabitLogIn"
+   },
+   "HabitOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "category": {
+      "type": "string",
+      "title": "Category"
+     },
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "frequency": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Frequency"
+     },
+     "target": {
+      "type": "string",
+      "title": "Target"
+     },
+     "reminder": {
+      "type": "boolean",
+      "title": "Reminder"
+     },
+     "status": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status"
+     },
+     "streak": {
+      "type": "integer",
+      "title": "Streak"
+     },
+     "history": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "History"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "category",
+     "time",
+     "frequency",
+     "target",
+     "reminder",
+     "status",
+     "streak",
+     "history",
+     "createdAt"
+    ],
+    "title": "HabitOut"
+   },
+   "HabitPatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60,
+        "minLength": 3
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "category": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(wake|hydration|activity|sleep|mindfulness|journaling|reading|growth)$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Category"
+     },
+     "time": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Time"
+     },
+     "frequency": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "integer"
+        },
+        "type": "array",
+        "maxItems": 14,
+        "minItems": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frequency"
+     },
+     "reminder": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reminder"
+     }
+    },
+    "type": "object",
+    "title": "HabitPatch"
+   },
+   "HabitPoint": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "pct": {
+      "type": "integer",
+      "title": "Pct"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "pct"
+    ],
+    "title": "HabitPoint"
+   },
+   "HistoryItem": {
+    "properties": {
+     "role": {
+      "type": "string",
+      "pattern": "^(user|ai)$",
+      "title": "Role"
+     },
+     "text": {
+      "type": "string",
+      "maxLength": 1000,
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role",
+     "text"
+    ],
+    "title": "HistoryItem"
+   },
+   "InsightStats": {
+    "properties": {
+     "avgMood": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avgmood"
+     },
+     "moodDeltaPct": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mooddeltapct"
+     },
+     "habitPct": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Habitpct"
+     },
+     "habitDeltaPct": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Habitdeltapct"
+     },
+     "avgSleep": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avgsleep"
+     },
+     "journalEntries": {
+      "type": "integer",
+      "title": "Journalentries"
+     },
+     "checkinStreak": {
+      "type": "integer",
+      "title": "Checkinstreak"
+     }
+    },
+    "type": "object",
+    "required": [
+     "avgMood",
+     "moodDeltaPct",
+     "habitPct",
+     "habitDeltaPct",
+     "avgSleep",
+     "journalEntries",
+     "checkinStreak"
+    ],
+    "title": "InsightStats"
+   },
+   "InsightsOut": {
+    "properties": {
+     "days": {
+      "type": "integer",
+      "title": "Days"
+     },
+     "stats": {
+      "$ref": "#/components/schemas/InsightStats"
+     },
+     "mood": {
+      "items": {
+       "$ref": "#/components/schemas/MoodPoint"
+      },
+      "type": "array",
+      "title": "Mood"
+     },
+     "habits": {
+      "items": {
+       "$ref": "#/components/schemas/HabitPoint"
+      },
+      "type": "array",
+      "title": "Habits"
+     },
+     "sleep": {
+      "items": {
+       "$ref": "#/components/schemas/SleepPoint"
+      },
+      "type": "array",
+      "title": "Sleep"
+     },
+     "journal": {
+      "items": {
+       "$ref": "#/components/schemas/JournalPoint"
+      },
+      "type": "array",
+      "title": "Journal"
+     },
+     "growth": {
+      "$ref": "#/components/schemas/Growth"
+     },
+     "patterns": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Patterns"
+     }
+    },
+    "type": "object",
+    "required": [
+     "days",
+     "stats",
+     "mood",
+     "habits",
+     "sleep",
+     "journal",
+     "growth",
+     "patterns"
+    ],
+    "title": "InsightsOut"
+   },
+   "JournalIn": {
+    "properties": {
+     "title": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "maxLength": 5000,
+      "minLength": 10,
+      "title": "Body"
+     },
+     "mood": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(calm|happy|okay|stressed|anxious|sad|frustrated)$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mood"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 6,
+      "title": "Tags"
+     }
+    },
+    "type": "object",
+    "required": [
+     "body"
+    ],
+    "title": "JournalIn"
+   },
+   "JournalOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "mood": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mood"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tags"
+     },
+     "at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "At"
+     },
+     "editedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Editedat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "body",
+     "mood",
+     "tags",
+     "at"
+    ],
+    "title": "JournalOut"
+   },
+   "JournalPatch": {
+    "properties": {
+     "title": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "body": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 5000,
+        "minLength": 10
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Body"
+     },
+     "mood": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(calm|happy|okay|stressed|anxious|sad|frustrated)$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mood"
+     },
+     "tags": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array",
+        "maxItems": 6
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tags"
+     }
+    },
+    "type": "object",
+    "title": "JournalPatch"
+   },
+   "JournalPoint": {
+    "properties": {
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "entries": {
+      "type": "integer",
+      "title": "Entries"
+     }
+    },
+    "type": "object",
+    "required": [
+     "label",
+     "entries"
+    ],
+    "title": "JournalPoint"
+   },
+   "LoginIn": {
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Password"
+     }
+    },
+    "type": "object",
+    "required": [
+     "email",
+     "password"
+    ],
+    "title": "LoginIn"
+   },
+   "MapEdge": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "maxLength": 64,
+      "title": "Id"
+     },
+     "source": {
+      "type": "string",
+      "maxLength": 80,
+      "title": "Source"
+     },
+     "target": {
+      "type": "string",
+      "maxLength": 80,
+      "title": "Target"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "source",
+     "target"
+    ],
+    "title": "MapEdge"
+   },
+   "MapNote": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "maxLength": 64,
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Label"
+     },
+     "position": {
+      "$ref": "#/components/schemas/Point"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label",
+     "position"
+    ],
+    "title": "MapNote"
+   },
+   "MemoryIn": {
+    "properties": {
+     "label": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 2,
+      "title": "Label"
+     }
+    },
+    "type": "object",
+    "required": [
+     "label"
+    ],
+    "title": "MemoryIn"
+   },
+   "MemoryOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "enabled": {
+      "type": "boolean",
+      "title": "Enabled"
+     },
+     "source": {
+      "type": "string",
+      "title": "Source"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label",
+     "enabled",
+     "source",
+     "createdAt"
+    ],
+    "title": "MemoryOut"
+   },
+   "MemoryPatch": {
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "title": "Enabled"
+     }
+    },
+    "type": "object",
+    "required": [
+     "enabled"
+    ],
+    "title": "MemoryPatch"
+   },
+   "MessageOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "actions": {
+      "items": {
+       "$ref": "#/components/schemas/ChatAction"
+      },
+      "type": "array",
+      "title": "Actions"
+     },
+     "crisis": {
+      "type": "boolean",
+      "title": "Crisis",
+      "default": false
+     },
+     "at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "role",
+     "text",
+     "at"
+    ],
+    "title": "MessageOut"
+   },
+   "MoodPoint": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "score": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Score"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "score",
+     "count"
+    ],
+    "title": "MoodPoint"
+   },
+   "NotificationList": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/NotificationOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "unread": {
+      "type": "integer",
+      "title": "Unread"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "unread"
+    ],
+    "title": "NotificationList"
+   },
+   "NotificationOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "To"
+     },
+     "read": {
+      "type": "boolean",
+      "title": "Read"
+     },
+     "at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "kind",
+     "title",
+     "body",
+     "to",
+     "read",
+     "at"
+    ],
+    "title": "NotificationOut"
+   },
+   "Page_CheckinOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/CheckinOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[CheckinOut]"
+   },
+   "Page_JournalOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/JournalOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[JournalOut]"
+   },
+   "Page_ReviewOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ReviewOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[ReviewOut]"
+   },
+   "Point": {
+    "properties": {
+     "x": {
+      "type": "number",
+      "title": "X"
+     },
+     "y": {
+      "type": "number",
+      "title": "Y"
+     }
+    },
+    "type": "object",
+    "required": [
+     "x",
+     "y"
+    ],
+    "title": "Point"
+   },
+   "ProfessionalDetail": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "designation": {
+      "type": "string",
+      "title": "Designation"
+     },
+     "specializations": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Specializations"
+     },
+     "qualifications": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Qualifications"
+     },
+     "registration": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Registration"
+     },
+     "experience": {
+      "type": "integer",
+      "title": "Experience"
+     },
+     "languages": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Languages"
+     },
+     "rating": {
+      "type": "number",
+      "title": "Rating"
+     },
+     "reviewsCount": {
+      "type": "integer",
+      "title": "Reviewscount"
+     },
+     "fee": {
+      "type": "integer",
+      "title": "Fee"
+     },
+     "modes": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Modes"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "available": {
+      "type": "boolean",
+      "title": "Available"
+     },
+     "nextSlot": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Nextslot"
+     },
+     "isSample": {
+      "type": "boolean",
+      "title": "Issample"
+     },
+     "bio": {
+      "type": "string",
+      "title": "Bio"
+     },
+     "approach": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Approach"
+     },
+     "credentials": {
+      "items": {
+       "$ref": "#/components/schemas/CredentialOut"
+      },
+      "type": "array",
+      "title": "Credentials"
+     },
+     "pricing": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Pricing"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "designation",
+     "specializations",
+     "qualifications",
+     "registration",
+     "experience",
+     "languages",
+     "rating",
+     "reviewsCount",
+     "fee",
+     "modes",
+     "avatar",
+     "available",
+     "nextSlot",
+     "isSample",
+     "bio",
+     "approach",
+     "credentials",
+     "pricing"
+    ],
+    "title": "ProfessionalDetail"
+   },
+   "ProfessionalOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "designation": {
+      "type": "string",
+      "title": "Designation"
+     },
+     "specializations": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Specializations"
+     },
+     "qualifications": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Qualifications"
+     },
+     "registration": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Registration"
+     },
+     "experience": {
+      "type": "integer",
+      "title": "Experience"
+     },
+     "languages": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Languages"
+     },
+     "rating": {
+      "type": "number",
+      "title": "Rating"
+     },
+     "reviewsCount": {
+      "type": "integer",
+      "title": "Reviewscount"
+     },
+     "fee": {
+      "type": "integer",
+      "title": "Fee"
+     },
+     "modes": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Modes"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "available": {
+      "type": "boolean",
+      "title": "Available"
+     },
+     "nextSlot": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Nextslot"
+     },
+     "isSample": {
+      "type": "boolean",
+      "title": "Issample"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "designation",
+     "specializations",
+     "qualifications",
+     "registration",
+     "experience",
+     "languages",
+     "rating",
+     "reviewsCount",
+     "fee",
+     "modes",
+     "avatar",
+     "available",
+     "nextSlot",
+     "isSample"
+    ],
+    "title": "ProfessionalOut"
+   },
+   "ProfilePatch": {
+    "properties": {
+     "fullName": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80,
+        "minLength": 2
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fullname"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 24,
+        "minLength": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "email": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "email"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Email"
+     },
+     "phone": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Phone"
+     },
+     "city": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "City"
+     },
+     "dob": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dob"
+     },
+     "pronouns": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(|she/her|he/him|they/them)$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pronouns"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "photoUrl": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photourl"
+     }
+    },
+    "type": "object",
+    "title": "ProfilePatch"
+   },
+   "ReflectionOut": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "text"
+    ],
+    "title": "ReflectionOut"
+   },
+   "RefreshIn": {
+    "properties": {
+     "refreshToken": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 20,
+      "title": "Refreshtoken"
+     }
+    },
+    "type": "object",
+    "required": [
+     "refreshToken"
+    ],
+    "title": "RefreshIn"
+   },
+   "RegisterIn": {
+    "properties": {
+     "fullName": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2,
+      "title": "Fullname"
+     },
+     "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 128,
+      "title": "Password"
+     },
+     "acceptTerms": {
+      "type": "boolean",
+      "title": "Acceptterms"
+     },
+     "confirmAge16": {
+      "type": "boolean",
+      "title": "Confirmage16"
+     }
+    },
+    "type": "object",
+    "required": [
+     "fullName",
+     "email",
+     "password",
+     "acceptTerms",
+     "confirmAge16"
+    ],
+    "title": "RegisterIn"
+   },
+   "ReviewIn": {
+    "properties": {
+     "rating": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Rating"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "rating"
+    ],
+    "title": "ReviewIn"
+   },
+   "ReviewOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "rating": {
+      "type": "integer",
+      "title": "Rating"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Createdat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "rating",
+     "text",
+     "createdAt"
+    ],
+    "title": "ReviewOut"
+   },
+   "RoutineStepIn": {
+    "properties": {
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "label": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Label"
+     },
+     "icon": {
+      "type": "string",
+      "maxLength": 30,
+      "title": "Icon",
+      "default": "Sparkles"
+     }
+    },
+    "type": "object",
+    "required": [
+     "time",
+     "label"
+    ],
+    "title": "RoutineStepIn"
+   },
+   "RoutineStepOut": {
+    "properties": {
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "label": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Label"
+     },
+     "icon": {
+      "type": "string",
+      "maxLength": 30,
+      "title": "Icon",
+      "default": "Sparkles"
+     },
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "position": {
+      "type": "integer",
+      "title": "Position"
+     }
+    },
+    "type": "object",
+    "required": [
+     "time",
+     "label",
+     "id",
+     "position"
+    ],
+    "title": "RoutineStepOut"
+   },
+   "SendIn": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "text"
+    ],
+    "title": "SendIn"
+   },
+   "SendOut": {
+    "properties": {
+     "userMessage": {
+      "$ref": "#/components/schemas/MessageOut"
+     },
+     "assistantMessage": {
+      "$ref": "#/components/schemas/MessageOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "userMessage",
+     "assistantMessage"
+    ],
+    "title": "SendOut"
+   },
+   "SleepIn": {
+    "properties": {
+     "bedtime": {
+      "type": "string",
+      "title": "Bedtime"
+     },
+     "wake": {
+      "type": "string",
+      "title": "Wake"
+     },
+     "quality": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Quality"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 280
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "bedtime",
+     "wake",
+     "quality"
+    ],
+    "title": "SleepIn"
+   },
+   "SleepOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "bedtime": {
+      "type": "string",
+      "title": "Bedtime"
+     },
+     "wake": {
+      "type": "string",
+      "title": "Wake"
+     },
+     "hours": {
+      "type": "number",
+      "title": "Hours"
+     },
+     "quality": {
+      "type": "integer",
+      "title": "Quality"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "date",
+     "bedtime",
+     "wake",
+     "hours",
+     "quality",
+     "note"
+    ],
+    "title": "SleepOut"
+   },
+   "SleepPoint": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "hours": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hours"
+     },
+     "quality": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Quality"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "hours",
+     "quality"
+    ],
+    "title": "SleepPoint"
+   },
+   "Slot": {
+    "properties": {
+     "time": {
+      "type": "string",
+      "title": "Time"
+     },
+     "available": {
+      "type": "boolean",
+      "title": "Available"
+     }
+    },
+    "type": "object",
+    "required": [
+     "time",
+     "available"
+    ],
+    "title": "Slot"
+   },
+   "Thoughts": {
+    "properties": {
+     "happening": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Happening"
+     },
+     "thinking": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Thinking",
+      "default": ""
+     },
+     "feeling": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Feeling",
+      "default": ""
+     },
+     "assumptions": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Assumptions",
+      "default": ""
+     },
+     "worry": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Worry",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "happening"
+    ],
+    "title": "Thoughts"
+   },
+   "TokenPair": {
+    "properties": {
+     "accessToken": {
+      "type": "string",
+      "title": "Accesstoken"
+     },
+     "refreshToken": {
+      "type": "string",
+      "title": "Refreshtoken"
+     },
+     "tokenType": {
+      "type": "string",
+      "title": "Tokentype",
+      "default": "bearer"
+     },
+     "expiresIn": {
+      "type": "integer",
+      "title": "Expiresin"
+     }
+    },
+    "type": "object",
+    "required": [
+     "accessToken",
+     "refreshToken",
+     "expiresIn"
+    ],
+    "title": "TokenPair"
+   },
+   "UserOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "email": {
+      "type": "string",
+      "title": "Email"
+     },
+     "fullName": {
+      "type": "string",
+      "title": "Fullname"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "phone": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Phone"
+     },
+     "city": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "City"
+     },
+     "dob": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dob"
+     },
+     "pronouns": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pronouns"
+     },
+     "avatar": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avatar"
+     },
+     "photoUrl": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photourl"
+     },
+     "joinedAt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Joinedat"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "email",
+     "fullName",
+     "name",
+     "joinedAt"
+    ],
+    "title": "UserOut"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  },
+  "securitySchemes": {
+   "HTTPBearer": {
+    "type": "http",
+    "scheme": "bearer"
+   }
+  }
+ }
+}

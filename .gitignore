@@ -1,0 +1,23 @@
+# Dependencies & builds
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secrets & local data — never commit
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+
+# Review screenshots (large, regenerated)
+screenshots/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
