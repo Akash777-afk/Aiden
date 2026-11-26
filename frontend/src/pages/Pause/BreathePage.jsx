@@ -97,7 +97,7 @@ export default function BreathePage() {
             animate={{ scale: target, background: `radial-gradient(circle at 35% 30%, #ffffffaa, ${colors[0]} 35%, ${colors[1]})` }}
             transition={{ duration: running ? phaseSecs : 0.6, ease: 'easeInOut' }}
           />
-          <div className="relative text-center text-white drop-shadow">
+          <div className="relative text-center text-[#1e1838] [text-shadow:0_1px_8px_rgba(255,255,255,0.55)]">
             <AnimatePresence mode="wait">
               {done ? (
                 <motion.div key="done" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
