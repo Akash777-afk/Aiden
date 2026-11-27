@@ -7,7 +7,7 @@ export function BottomNav() {
   const { pathname } = useLocation()
   return (
     <nav
-      className="glass fixed inset-x-0 bottom-0 z-40 border-t border-line/70 shadow-[0_-8px_30px_-12px_rgba(76,52,140,0.25)] lg:hidden"
+      className="bg-surface fixed inset-x-0 bottom-0 z-40 border-t border-line/70 shadow-[0_-8px_30px_-12px_rgba(76,52,140,0.25)] lg:hidden"
       style={{ paddingBottom: 'var(--safe-bottom)' }}
       aria-label="Primary"
     >

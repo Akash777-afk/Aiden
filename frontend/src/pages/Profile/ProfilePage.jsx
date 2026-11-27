@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import { Bell, Camera, ChevronRight, LifeBuoy, LogOut, Mail, MapPin, Pencil, Phone, Settings, ShieldCheck, Upload, User, Trash2 } from 'lucide-react'
-import { Button, Card, ConfirmDialog, Input, Modal, Page, PageHeader, PersonAvatar, Select, UserAvatar } from '../../components/common'
+import { Bell, Camera, ChevronRight, LifeBuoy, LogOut, Mail, MapPin, Moon, Pencil, Phone, PlayCircle, Settings, ShieldCheck, Upload, User, Trash2 } from 'lucide-react'
+import { Button, Card, ConfirmDialog, Input, Modal, Page, PageHeader, PersonAvatar, Select, Toggle, UserAvatar } from '../../components/common'
 import { openSupport } from '../../components/layout/SupportSheet'
 import { useApp } from '../../context/AppContext'
 import { useData } from '../../context/DataContext'
@@ -156,15 +156,18 @@ function DetailsForm({ onDone }) {
 
 export default function ProfilePage() {
   const nav = useNavigate()
-  const { user, signOut } = useApp()
+  const { user, signOut, isDark, updatePrefs } = useApp()
   const { checkins, habits, journal, learned, notifications } = useData()
   const [avatarOpen, setAvatarOpen] = useState(false)
+  const [demoOpen, setDemoOpen] = useState(false)
   const [editing, setEditing] = useState(false)
   const [logout, setLogout] = useState(false)
   const unread = notifications.filter((n) => !n.read).length
 
   const links = [
     { label: 'Notifications', icon: Bell, to: '/notifications', badge: unread || null },
+    { label: 'Watch the demo video', icon: PlayCircle, action: () => setDemoOpen(true) },
+    { label: 'Dark mode', icon: Moon, toggle: true },
     { label: 'Settings & preferences', icon: Settings, to: '/settings' },
     { label: 'Privacy & data', icon: ShieldCheck, to: '/settings#privacy' },
     { label: 'Need urgent help?', icon: LifeBuoy, action: openSupport, danger: true },
@@ -240,7 +243,11 @@ export default function ProfilePage() {
       )}
 
       <Card className="mb-6 divide-y divide-line p-2">
-        {links.map(({ label, icon: Icon, to, action, badge, danger }) => (
+        {links.map(({ label, icon: Icon, to, action, badge, danger, toggle }) => toggle ? (
+          <div key={label} className="px-3 [&>div]:py-2.5">
+            <Toggle icon={Icon} label={label} checked={isDark} onChange={(v) => updatePrefs({ theme: v ? 'dark' : 'light' })} />
+          </div>
+        ) : (
           <button key={label} onClick={() => (action ? action() : nav(to))} className="flex w-full items-center gap-3 rounded-xl px-3 py-3.5 text-left hover:bg-surface-2">
             <span className={cn('grid size-9 place-items-center rounded-xl', danger ? 'bg-rose-50 text-rose-500 dark:bg-rose-500/10' : 'bg-surface-2 text-primary')}>
               <Icon className="size-[18px]" />
@@ -258,6 +265,9 @@ export default function ProfilePage() {
       <p className="mt-4 text-center text-xs text-muted">AIDEN · A better connection with yourself.</p>
 
       <AvatarEditor open={avatarOpen} onClose={() => setAvatarOpen(false)} />
+      <Modal open={demoOpen} onClose={() => setDemoOpen(false)} title="AIDEN demo" subtitle="A quick tour of the app" size="lg">
+        <video src="/demo/aiden-demo.mp4" controls autoPlay playsInline preload="metadata" className="mx-auto max-h-[70dvh] w-auto max-w-full rounded-2xl bg-black" />
+      </Modal>
       <ConfirmDialog
         open={logout}
         onClose={() => setLogout(false)}
